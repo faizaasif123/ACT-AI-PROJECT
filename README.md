@@ -27,8 +27,10 @@ A single-file, front-end-only web app that acts as a directory of "verified" han
 - Idea from myself + chagpt
 - Claude for basic front end
 - Google gemini api key
-- Google stich for idea enhncing
+- Google stich for idea enhancing
 - Deepseek for updation and changes
+- Github
+- Vercel for deployment
 
 ## Running it
 
