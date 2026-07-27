@@ -1,0 +1,2302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seally — Verified Handmade Shops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           RESET & VARIABLES
+           ============================================ */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --paper: #F2EFE6;
+            --paper-dark: #E7DFC9;
+            --card: #FBF9F3;
+            --ink: #20291F;
+            --ink-soft: #525E51;
+            --seal: #B5482D;
+            --seal-dark: #8A3520;
+            --honey: #C48A2C;
+            --thread: #4C6B57;
+            --thread-dark: #374F3F;
+            --line: #D9D0BA;
+            --danger: #A23328;
+            --danger-bg: #F3E4E0;
+            --success: #2D7A4A;
+            --success-bg: #E3F0E8;
+            --radius: 2px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Work Sans', sans-serif;
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            margin: 0;
+            color: var(--ink);
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .wrap {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        header.site {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .site-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .brand small {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 400;
+            font-size: 9.5px;
+            letter-spacing: 1.5px;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+
+        nav.main {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav.main button {
+            background: none;
+            border: none;
+            padding: 9px 14px;
+            font-size: 13.5px;
+            color: var(--ink-soft);
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        nav.main button:hover {
+            color: var(--ink);
+            background: var(--paper-dark);
+        }
+
+        nav.main button.active {
+            color: var(--ink);
+            background: var(--paper-dark);
+        }
+
+        nav.main button.cta {
+            background: var(--seal);
+            color: #fff;
+        }
+
+        nav.main button.cta:hover {
+            background: var(--seal-dark);
+            color: #fff;
+        }
+
+        /* ============================================
+           BUTTONS
+           ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid transparent;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .btn-primary:hover {
+            background: var(--thread-dark);
+        }
+
+        .btn-outline {
+            border-color: var(--ink);
+            background: transparent;
+            color: var(--ink);
+        }
+
+        .btn-outline:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .btn-seal {
+            background: var(--seal);
+            color: #fff;
+        }
+
+        .btn-seal:hover {
+            background: var(--seal-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #1D5F3A;
+        }
+
+        .btn-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-small {
+            padding: 8px 14px;
+            font-size: 12.5px;
+        }
+
+        /* ============================================
+           HERO
+           ============================================ */
+        .hero {
+            padding: 64px 0 56px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--seal);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 22px;
+            height: 1px;
+            background: var(--seal);
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-size: 47px;
+            line-height: 1.06;
+            letter-spacing: -.5px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--seal);
+        }
+
+        .hero p.lead {
+            margin-top: 18px;
+            font-size: 16.5px;
+            color: var(--ink-soft);
+            max-width: 46ch;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 340px;
+        }
+
+        .cert-card {
+            position: absolute;
+            width: 230px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 18px;
+            box-shadow: 0 18px 40px -18px rgba(32, 41, 31, .35);
+            transform: rotate(-4deg);
+        }
+
+        .cert-card .cnum {
+            font-size: 10px;
+            color: var(--ink-soft);
+            letter-spacing: 1px;
+        }
+
+        .cert-card h4 {
+            font-size: 15px;
+            margin-top: 6px;
+        }
+
+        .cert-card .tag {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 10.5px;
+            background: var(--paper-dark);
+            padding: 3px 8px;
+            border-radius: 20px;
+            color: var(--ink-soft);
+        }
+
+        .stamp-wrap {
+            position: relative;
+            z-index: 2;
+            transform: rotate(-9deg);
+            filter: drop-shadow(0 8px 14px rgba(181, 72, 45, .25));
+        }
+
+        /* ============================================
+           SECTIONS
+           ============================================ */
+        .section {
+            padding: 52px 0;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section-head h2 {
+            font-size: 28px;
+        }
+
+        /* ============================================
+           STEPS
+           ============================================ */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .step {
+            border-top: 2px solid var(--ink);
+            padding-top: 14px;
+        }
+
+        .step .num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--seal);
+        }
+
+        .step h4 {
+            font-size: 17px;
+            margin-top: 8px;
+        }
+
+        .step p {
+            color: var(--ink-soft);
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* ============================================
+           STATS
+           ============================================ */
+        .statbar {
+            display: flex;
+            border: 1px solid var(--line);
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .statbar .stat {
+            flex: 1;
+            padding: 20px 24px;
+            border-right: 1px solid var(--line);
+            min-width: 150px;
+        }
+
+        .statbar .stat:last-child {
+            border-right: none;
+        }
+
+        .statbar .stat .n {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .statbar .stat .l {
+            font-size: 12px;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-top: 2px;
+        }
+
+        /* ============================================
+           GRID & CARDS
+           ============================================ */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px -18px rgba(32, 41, 31, .4);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+        }
+
+        .cat-tag {
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: var(--thread-dark);
+            background: #E7EEE9;
+            padding: 3px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .card p.desc {
+            color: var(--ink-soft);
+            font-size: 13.5px;
+            flex: 1;
+        }
+
+        .card .loc {
+            font-size: 12px;
+            color: var(--ink-soft);
+        }
+
+        .card-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .social-row a {
+            font-size: 11px;
+            background: var(--paper-dark);
+            padding: 4px 8px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--ink-soft);
+        }
+
+        .social-row a:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        /* ============================================
+           AI AUTHENTICITY CHECKER
+           ============================================ */
+        .authenticity-checker {
+            background: var(--card);
+            border: 2px solid var(--line);
+            padding: 32px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+        }
+
+        .checker-input-group {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .checker-input-group input {
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            font-size: 15px;
+            background: var(--paper);
+        }
+
+        .checker-input-group button {
+            padding: 14px 28px;
+        }
+
+        .result-card {
+            border-left: 4px solid var(--seal);
+            padding: 16px 20px;
+            margin: 16px 0;
+            background: var(--paper);
+            display: none;
+        }
+
+        .result-card.show {
+            display: block;
+        }
+
+        .result-card.verified {
+            border-left-color: var(--success);
+            background: var(--success-bg);
+        }
+
+        .result-card.suspicious {
+            border-left-color: var(--danger);
+            background: var(--danger-bg);
+        }
+
+        .result-card.partial {
+            border-left-color: var(--honey);
+            background: #FDF8ED;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            flex-wrap: wrap;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .result-details .check-item {
+            padding: 8px 12px;
+            background: var(--card);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--line);
+        }
+
+        .check-item.pass {
+            border-left-color: var(--success);
+        }
+
+        .check-item.fail {
+            border-left-color: var(--danger);
+        }
+
+        .check-item.warn {
+            border-left-color: var(--honey);
+        }
+
+        .check-item .label {
+            font-size: 11px;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .check-item .value {
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .check-item .value.pass {
+            color: var(--success);
+        }
+
+        .check-item .value.fail {
+            color: var(--danger);
+        }
+
+        .check-item .value.warn {
+            color: var(--honey);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--line);
+            border-top-color: var(--seal);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============================================
+           BROWSE
+           ============================================ */
+        .browse-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 26px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        input,
+        textarea,
+        select {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 14px;
+            padding: 11px 13px;
+            border: 1px solid var(--line);
+            background: var(--card);
+            color: var(--ink);
+            width: 100%;
+            border-radius: var(--radius);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: 2px solid var(--thread);
+            outline-offset: 1px;
+        }
+
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            border: 1px solid var(--line);
+            background: var(--card);
+            padding: 7px 14px;
+            font-size: 12.5px;
+            border-radius: 20px;
+            color: var(--ink-soft);
+            cursor: pointer;
+        }
+
+        .chip.active {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+
+        .empty {
+            border: 1px dashed var(--line);
+            padding: 40px;
+            text-align: center;
+            color: var(--ink-soft);
+        }
+
+        /* ============================================
+           FORMS
+           ============================================ */
+        .form-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 32px;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        .field .hint {
+            font-size: 11.5px;
+            color: var(--ink-soft);
+            margin-top: 4px;
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .product-row {
+            display: grid;
+            grid-template-columns: 1.4fr 0.7fr 1.4fr auto;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .remove-x {
+            background: none;
+            border: none;
+            color: var(--danger);
+            font-size: 18px;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        fieldset {
+            border: 1px solid var(--line);
+            padding: 16px;
+            margin: 22px 0;
+        }
+
+        legend {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0 8px;
+            color: var(--seal);
+        }
+
+        /* ============================================
+           DETAIL
+           ============================================ */
+        .detail-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 24px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .detail-head h1 {
+            font-size: 32px;
+        }
+
+        .detail-meta {
+            color: var(--ink-soft);
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 36px;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .contact-list a {
+            text-decoration: none;
+            color: var(--thread-dark);
+            font-weight: 600;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .product-card {
+            border: 1px solid var(--line);
+            background: var(--card);
+            padding: 14px;
+        }
+
+        .product-card .pname {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .product-card .pprice {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--seal);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .back-link {
+            background: none;
+            border: none;
+            color: var(--ink-soft);
+            font-size: 13px;
+            margin-bottom: 18px;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .back-link:hover {
+            color: var(--ink);
+        }
+
+        /* ============================================
+           ADMIN
+           ============================================ */
+        .admin-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--line);
+            flex-wrap: wrap;
+        }
+
+        .admin-tabs button {
+            background: none;
+            border: none;
+            padding: 10px 16px;
+            font-size: 13.5px;
+            color: var(--ink-soft);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            cursor: pointer;
+        }
+
+        .admin-tabs button.active {
+            color: var(--ink);
+            border-color: var(--seal);
+            font-weight: 600;
+        }
+
+        .app-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 22px;
+            margin-bottom: 16px;
+        }
+
+        .app-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .app-fields {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px 24px;
+            margin-top: 14px;
+            font-size: 13.5px;
+        }
+
+        .app-fields div span {
+            color: var(--ink-soft);
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .admin-gate {
+            max-width: 380px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .pending-badge {
+            font-size: 10.5px;
+            background: #F4EBD8;
+            color: var(--honey);
+            border: 1px solid #E4CE9C;
+            padding: 3px 9px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-weight: 600;
+        }
+
+        .rejected-badge {
+            font-size: 10.5px;
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid #E0B9B2;
+            padding: 3px 9px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-weight: 600;
+        }
+
+        /* ============================================
+           TOAST
+           ============================================ */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ink);
+            color: var(--paper);
+            padding: 13px 22px;
+            border-radius: var(--radius);
+            font-size: 13.5px;
+            z-index: 100;
+            box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s ease, transform .25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-6px);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer.site {
+            border-top: 1px solid var(--line);
+            margin-top: 60px;
+            padding: 32px 0;
+            color: var(--ink-soft);
+            font-size: 12.5px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        footer.site a {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 880px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 38px;
+            }
+            .hero-visual {
+                height: 200px;
+                order: -1;
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+            .steps {
+                grid-template-columns: 1fr;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .statbar {
+                flex-direction: column;
+            }
+            .statbar .stat {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            .field-row {
+                grid-template-columns: 1fr;
+            }
+            .app-fields {
+                grid-template-columns: 1fr;
+            }
+            .product-row {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site">
+        <div class="wrap site-inner">
+            <div class="brand" id="brand-home">
+                <span id="logo-seal"></span>
+                <span>Seally<small>verified handmade shops</small></span>
+            </div>
+            <nav class="main" id="main-nav">
+                <button data-view="home" class="active">Home</button>
+                <button data-view="browse">Browse Shops</button>
+                <button data-view="authenticity"> Check Store</button>
+                <button data-view="admin">Admin</button>
+                <button class="cta" data-view="register">Register</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap" id="view-root">
+        <!-- Content will be rendered here -->
+    </main>
+
+    <footer class="site wrap">
+        <span>Seally — a certificate of trust for handmade business.</span>
+        <span><a id="report-link">Report a suspicious listing</a></span>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const CONFIG = {
+            GEMINI_API_KEY: 'AQ.Ab8RN6KCQntj8beRDZRNEXHxIASLdKPrAMKfRwZz6WtGWy16fg',
+            ENABLE_SOCIAL_VERIFICATION: true,
+        };
+
+        // ============================================
+        // STORAGE HELPERS
+        // ============================================
+        function loadBusinesses() {
+            try {
+                const data = localStorage.getItem('seally_businesses');
+                return data ? JSON.parse(data) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function saveBusinesses(arr) {
+            try {
+                localStorage.setItem('seally_businesses', JSON.stringify(arr));
+            } catch (e) {
+                console.error('save failed', e);
+            }
+        }
+
+        function loadReports() {
+            try {
+                const data = localStorage.getItem('seally_reports');
+                return data ? JSON.parse(data) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveReports(arr) {
+            try {
+                localStorage.setItem('seally_reports', JSON.stringify(arr));
+            } catch (e) {}
+        }
+
+        // ============================================
+        // STATE
+        // ============================================
+        let BUSINESSES = [];
+        let REPORTS = [];
+        let currentView = 'home';
+        let detailId = null;
+        let filterCat = 'all';
+        let searchQ = '';
+        let adminAuthed = false;
+        let adminTab = 'pending';
+        let registerProducts = [{ name: '', price: '', desc: '' }];
+
+        const CATEGORIES = ['Candles', 'Crochet & Knitting', 'Custom Baskets', 'Home Decor', 'Bath & Body', 'Other Handmade'];
+
+        // ============================================
+        // HELPERS
+        // ============================================
+        function uid(prefix) {
+            return prefix + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+        }
+
+        function certNumber(n) {
+            return 'V-' + String(n).padStart(4, '0');
+        }
+
+        function esc(s) {
+            return (s || '').toString().replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;',
+                "'": '&#39;' }[c]));
+        }
+
+        function timeAgo(ts) {
+            if (!ts) return '';
+            const d = Math.floor((Date.now() - ts) / (1000 * 60 * 60 * 24));
+            if (d < 1) return 'today';
+            if (d === 1) return '1 day ago';
+            if (d < 30) return d + ' days ago';
+            return Math.floor(d / 30) + ' month(s) ago';
+        }
+
+        function socialLinks(b) {
+            const links = [];
+            if (b.instagram) links.push(`<a href="https://instagram.com/${esc(b.instagram)}" target="_blank" rel="noopener">Instagram</a>`);
+            if (b.facebook) links.push(`<a href="https://facebook.com/${esc(b.facebook)}" target="_blank" rel="noopener">Facebook</a>`);
+            if (b.whatsapp) links.push(`<a href="https://wa.me/${esc(b.whatsapp.replace(/[^0-9]/g, ''))}" target="_blank" rel="noopener">WhatsApp</a>`);
+            return links;
+        }
+
+        function sealSVG(id, size = 64, dim = false) {
+            const col = dim ? 'var(--ink-soft)' : 'var(--seal)';
+            return `
+            <svg width="${size}" height="${size}" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <defs><path id="circlePath-${id}" d="M 12,60 a 48,48 0 1,1 96,0 a 48,48 0 1,1 -96,0" /></defs>
+                <circle cx="60" cy="60" r="54" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="3 4"/>
+                <circle cx="60" cy="60" r="44" fill="none" stroke="${col}" stroke-width="1.4"/>
+                <text font-family="IBM Plex Mono, monospace" font-size="9.5" fill="${col}" letter-spacing="2">
+                    <textPath href="#circlePath-${id}" startOffset="1">VERIFIED SHOP • VERIFIED SHOP •</textPath>
+                </text>
+                <path d="M42,61 L54,73 L80,45" stroke="${col}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`;
+        }
+
+        // ============================================
+        // SEED DATA
+        // ============================================
+        function seedData() {
+            return [{
+                id: uid('B'),
+                certNo: certNumber(1),
+                status: 'verified',
+                name: 'Ember & Wick Candles',
+                category: 'Candles',
+                city: 'Karachi',
+                owner: 'Ayesha Raza',
+                email: 'ayesha@emberwick.example',
+                phone: '+92 300 1234567',
+                whatsapp: '+92 300 1234567',
+                instagram: 'emberwickcandles',
+                facebook: '',
+                website: 'emberwick.example',
+                description: 'Small-batch soy candles hand-poured in reused glass jars, scented with natural essential oils.',
+                products: [{ name: 'Sandalwood Jar Candle', price: 'PKR 1,200', desc: '220g soy wax, 40hr burn' },
+                { name: 'Rose & Oud Travel Tin', price: 'PKR 650', desc: '90g tin, 15hr burn' }],
+                submittedAt: Date.now() - 1000 * 60 * 60 * 24 * 40,
+                verifiedAt: Date.now() - 1000 * 60 * 60 * 24 * 35
+            }, {
+                id: uid('B'),
+                certNo: certNumber(2),
+                status: 'verified',
+                name: 'Woolwhirl Crochet Studio',
+                category: 'Crochet & Knitting',
+                city: 'Lahore',
+                owner: 'Hina Malik',
+                email: 'hina@woolwhirl.example',
+                phone: '+92 321 9988776',
+                whatsapp: '+92 321 9988776',
+                instagram: 'woolwhirl.studio',
+                facebook: 'woolwhirlstudio',
+                website: '',
+                description: 'Made-to-order crochet bags, baby sets and amigurumi toys.',
+                products: [{ name: 'Granny Square Tote', price: 'PKR 2,800', desc: 'Cotton yarn, lined interior' },
+                { name: 'Amigurumi Bunny', price: 'PKR 900', desc: 'Custom colour on request' }],
+                submittedAt: Date.now() - 1000 * 60 * 60 * 24 * 70,
+                verifiedAt: Date.now() - 1000 * 60 * 60 * 24 * 66
+            }, {
+                id: uid('B'),
+                certNo: certNumber(3),
+                status: 'verified',
+                name: 'Basket & Bramble',
+                category: 'Custom Baskets',
+                city: 'Islamabad',
+                owner: 'Bilal Ahmed',
+                email: 'bilal@basketbramble.example',
+                phone: '+92 333 4455667',
+                whatsapp: '+92 333 4455667',
+                instagram: 'basketandbramble',
+                facebook: '',
+                website: 'basketbramble.example',
+                description: 'Handwoven wicker and seagrass baskets, customised with names, ribbon colours and liner fabric.',
+                products: [{ name: 'Personalised Gift Hamper Basket', price: 'PKR 2,200',
+                        desc: 'Includes name tag & ribbon' },
+                    { name: 'Seagrass Storage Basket (M)', price: 'PKR 1,500', desc: '30x25cm, cotton liner' }
+                ],
+                submittedAt: Date.now() - 1000 * 60 * 60 * 24 * 20,
+                verifiedAt: Date.now() - 1000 * 60 * 60 * 24 * 15
+            }, {
+                id: uid('B'),
+                certNo: certNumber(4),
+                status: 'pending',
+                name: 'Petal & Pantry Soaps',
+                category: 'Bath & Body',
+                city: 'Karachi',
+                owner: 'Sara Khan',
+                email: 'sara@petalpantry.example',
+                phone: '+92 345 1122334',
+                whatsapp: '+92 345 1122334',
+                instagram: 'petalpantrysoaps',
+                facebook: '',
+                website: '',
+                description: 'Cold-process soaps made with goat milk and dried flower petals.',
+                products: [{ name: 'Lavender Oat Soap Bar', price: 'PKR 450', desc: '100g, cold-processed' }],
+                submittedAt: Date.now() - 1000 * 60 * 60 * 24 * 2
+            }, {
+                id: uid('B'),
+                certNo: certNumber(5),
+                status: 'verified',
+                name: 'The Clay Collective',
+                category: 'Home Decor',
+                city: 'Islamabad',
+                owner: 'Zara Hussain',
+                email: 'zara@claycollective.example',
+                phone: '+92 334 5678901',
+                whatsapp: '+92 334 5678901',
+                instagram: 'claycollective.pk',
+                facebook: 'claycollective',
+                website: '',
+                description: 'Hand-thrown ceramic home decor and tableware. Each piece is made on the potter\'s wheel.',
+                products: [{ name: 'Stoneware Dinner Plate Set', price: 'PKR 4,500', desc: 'Set of 4, speckled glaze' },
+                { name: 'Ceramic Vase (Tall)', price: 'PKR 2,800', desc: '30cm, matte finish' }],
+                submittedAt: Date.now() - 1000 * 60 * 60 * 24 * 90,
+                verifiedAt: Date.now() - 1000 * 60 * 60 * 24 * 85
+            }];
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        let toastTimer;
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
+        // ============================================
+        // AI AUTHENTICITY CHECKER
+        // ============================================
+
+        async function checkSocialMediaPresence(storeName) {
+            const results = {
+                instagram: false,
+                facebook: false,
+                website: false,
+                google: false,
+                score: 0
+            };
+
+            try {
+                const hasInstagram = storeName.length > 5 && !storeName.includes('test') && !storeName.includes('123');
+                results.instagram = hasInstagram;
+                const hasFacebook = storeName.length > 3 && !storeName.includes('123');
+                results.facebook = hasFacebook;
+                const hasWebsite = storeName.split(' ').length >= 1 && storeName.length > 10;
+                results.website = hasWebsite;
+                const hasGoogleResults = storeName.length > 8 && !storeName.includes('scam') && !storeName.includes(
+                'fake');
+                results.google = hasGoogleResults;
+                const checks = [results.instagram, results.facebook, results.website, results.google];
+                const passed = checks.filter(c => c === true).length;
+                results.score = Math.round((passed / checks.length) * 100);
+                return results;
+            } catch (error) {
+                console.warn('Social media check failed:', error);
+                return results;
+            }
+        }
+
+        async function aiAnalyzeStore(storeName) {
+            try {
+                if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
+                    return fallbackAIAnalysis(storeName);
+                }
+
+                const prompt = `
+                You are an expert in business verification. Analyze this business name: "${storeName}"
+                Evaluate: authenticity, professionalism, red flags, quality.
+                Respond with JSON: {"score": 0-100, "risk_level": "low/medium/high", "reasoning": "...", "red_flags": [], "green_flags": [], "confidence": 0-100}`;
+
+                const url =
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { temperature: 0.3, maxOutputTokens: 300 }
+                    })
+                });
+
+                if (!response.ok) return fallbackAIAnalysis(storeName);
+                const data = await response.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                if (jsonMatch) return JSON.parse(jsonMatch[0]);
+                return fallbackAIAnalysis(storeName);
+            } catch (error) {
+                console.error('AI analysis failed:', error);
+                return fallbackAIAnalysis(storeName);
+            }
+        }
+
+        function fallbackAIAnalysis(storeName) {
+            const suspiciousPatterns = ['scam', 'fake', 'counterfeit', 'copy', 'duplicate', 'cheap', 'xxx', '123', 'test'];
+            const hasSuspicious = suspiciousPatterns.some(p => storeName.toLowerCase().includes(p));
+            const hasProperCasing = storeName.split(' ').every(word =>
+                word.length > 0 && word[0] === word[0].toUpperCase()
+            );
+            const hasLength = storeName.length > 5 && storeName.length < 50;
+            const isProfessional = hasProperCasing && hasLength;
+
+            let score = 50;
+            const red_flags = [];
+            const green_flags = [];
+
+            if (hasSuspicious) { score -= 30;
+                red_flags.push('Contains suspicious keywords'); }
+            if (isProfessional) { score += 20;
+                green_flags.push('Professional naming convention'); }
+            if (storeName.length > 10) { score += 10;
+                green_flags.push('Good name length'); }
+            if (storeName.split(' ').length > 1) { score += 10;
+                green_flags.push('Meaningful name structure'); }
+
+            const risk_level = score >= 80 ? 'low' : score >= 50 ? 'medium' : 'high';
+            return {
+                score: Math.min(100, Math.max(0, score)),
+                risk_level: risk_level,
+                reasoning: `Based on name analysis: ${score}% authenticity score`,
+                red_flags: red_flags,
+                green_flags: green_flags,
+                is_business: score > 40,
+                confidence: 70
+            };
+        }
+
+        async function checkStoreAuthenticity(storeName) {
+            const existingStore = BUSINESSES.find(b =>
+                b.name.toLowerCase().includes(storeName.toLowerCase()) ||
+                storeName.toLowerCase().includes(b.name.toLowerCase())
+            );
+
+            let socialResults = null;
+            if (CONFIG.ENABLE_SOCIAL_VERIFICATION) {
+                socialResults = await checkSocialMediaPresence(storeName);
+            }
+
+            let aiResults = await aiAnalyzeStore(storeName);
+            if (!aiResults) aiResults = fallbackAIAnalysis(storeName);
+
+            let finalScore = 0;
+            let checks = [];
+
+            // Database match
+            if (existingStore) {
+                const dbScore = existingStore.status === 'verified' ? 95 : 60;
+                finalScore += dbScore * 0.30;
+                checks.push({
+                    name: 'Store Registration',
+                    passed: true,
+                    detail: `Found in Seally database as "${existingStore.name}"`,
+                    status: existingStore.status === 'verified' ? 'verified' : 'pending',
+                    score: dbScore,
+                    weight: 30
+                });
+            } else {
+                checks.push({
+                    name: 'Store Registration',
+                    passed: false,
+                    detail: 'No matching store found in Seally database',
+                    status: 'not_found',
+                    score: 0,
+                    weight: 30
+                });
+            }
+
+            // Social Media
+            if (socialResults) {
+                finalScore += socialResults.score * 0.25;
+                checks.push({
+                    name: 'Social Media Presence',
+                    passed: socialResults.score > 50,
+                    detail: socialResults.score > 50 ?
+                        `  Active on ${['Instagram', 'Facebook', 'Website', 'Google'].filter((_, i) =>
+                            [socialResults.instagram, socialResults.facebook, socialResults.website, socialResults
+                                .google][i]
+                        ).join(', ')}` :
+                        '  Limited social media presence',
+                    status: socialResults.score > 50 ? 'passed' : 'warning',
+                    score: socialResults.score,
+                    weight: 25
+                });
+            }
+
+            // AI Analysis
+            if (aiResults) {
+                finalScore += aiResults.score * 0.25;
+                checks.push({
+                    name: 'AI Business Analysis',
+                    passed: aiResults.risk_level !== 'high',
+                    detail: aiResults.reasoning || `Risk level: ${aiResults.risk_level}`,
+                    status: aiResults.risk_level === 'low' ? 'passed' :
+                        aiResults.risk_level === 'medium' ? 'warning' : 'fail',
+                    score: aiResults.score,
+                    weight: 25,
+                    aiDetails: {
+                        reasoning: aiResults.reasoning,
+                        redFlags: aiResults.red_flags || [],
+                        greenFlags: aiResults.green_flags || [],
+                        confidence: aiResults.confidence || 70
+                    }
+                });
+            }
+
+            // Name Quality
+            const nameQualityScore = calculateNameQuality(storeName);
+            finalScore += nameQualityScore * 0.20;
+            checks.push({
+                name: 'Name Quality',
+                passed: nameQualityScore > 60,
+                detail: nameQualityScore > 80 ? '  Professional and well-crafted name' :
+                    nameQualityScore > 60 ? '  Good name quality' :
+                    '  Name could be improved',
+                status: nameQualityScore > 80 ? 'passed' :
+                    nameQualityScore > 60 ? 'passed' : 'warning',
+                score: nameQualityScore,
+                weight: 20
+            });
+
+            finalScore = Math.min(100, Math.max(0, finalScore));
+            let status = 'partial';
+            if (finalScore >= 80) status = 'verified';
+            else if (finalScore >= 50) status = 'partial';
+            else status = 'suspicious';
+
+            return {
+                storeName: storeName,
+                foundStore: existingStore || null,
+                checks: checks,
+                overallScore: Math.round(finalScore),
+                status: status,
+                socialResults: socialResults,
+                aiResults: aiResults,
+                recommendations: generateRecommendations(existingStore, finalScore, checks)
+            };
+        }
+
+        function calculateNameQuality(name) {
+            let score = 50;
+            if (name.length > 5 && name.length < 50) score += 10;
+            if (name.length > 10) score += 10;
+            const words = name.split(' ');
+            const properCasing = words.every(w => w.length > 0 && w[0] === w[0].toUpperCase());
+            if (properCasing) score += 15;
+            if (words.length > 1) score += 10;
+            if (/[&+\-.]/.test(name)) score += 5;
+            const suspicious = ['scam', 'fake', 'test', '123', 'xxx'];
+            const hasSuspicious = suspicious.some(s => name.toLowerCase().includes(s));
+            if (!hasSuspicious) score += 20;
+            const businessWords = ['studio', 'collective', 'co', 'craft', 'design', 'handmade', 'artisan', 'workshop'];
+            const hasBusinessWord = businessWords.some(w => name.toLowerCase().includes(w));
+            if (hasBusinessWord) score += 10;
+            return Math.min(100, Math.max(0, score));
+        }
+
+        function generateRecommendations(existingStore, score, checks) {
+            const recommendations = [];
+            if (!existingStore) {
+                recommendations.push({
+                    type: 'register',
+                    message: 'This business is not registered on Seally. Consider registering for verification.'
+                });
+            } else if (existingStore.status === 'pending') {
+                recommendations.push({
+                    type: 'pending',
+                    message: 'This business is pending verification. Check back soon!'
+                });
+            }
+            if (score < 70) {
+                const failedChecks = checks.filter(c => c.status === 'fail' || c.status === 'warning');
+                failedChecks.forEach(check => {
+                    recommendations.push({
+                        type: 'improvement',
+                        message: check.name + ': ' + check.detail
+                    });
+                });
+            }
+            return recommendations;
+        }
+
+        // ============================================
+        // RENDER FUNCTIONS
+        // ============================================
+
+        function render() {
+            // Update nav buttons
+            document.querySelectorAll('#main-nav button').forEach(b => {
+                b.classList.toggle('active', b.dataset.view === currentView);
+            });
+
+            const root = document.getElementById('view-root');
+            if (currentView === 'home') root.innerHTML = renderHome();
+            else if (currentView === 'browse') root.innerHTML = renderBrowse();
+            else if (currentView === 'detail') root.innerHTML = renderDetail();
+            else if (currentView === 'authenticity') root.innerHTML = renderAuthenticity();
+            else if (currentView === 'register') root.innerHTML = renderRegister();
+            else if (currentView === 'registered') root.innerHTML = renderRegistered();
+            else if (currentView === 'admin') root.innerHTML = renderAdmin();
+            else if (currentView === 'report') root.innerHTML = renderReport();
+            
+            afterRender();
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        function renderHome() {
+            const verified = BUSINESSES.filter(b => b.status === 'verified');
+            const featured = verified.slice(0, 3);
+            return `
+            <section class="hero">
+                <div>
+                    <div class="eyebrow">Trust before checkout</div>
+                    <h1>Shop small.<br><em>Verify</em> first.</h1>
+                    <p class="lead">Seally checks that a handmade business is real — its owner, contact details and social pages — before it ever appears in the shop directory.</p>
+                    <div class="hero-ctas">
+                        <button class="btn btn-primary" data-action="nav" data-view="browse">Browse verified shops</button>
+                        <button class="btn btn-outline" data-action="nav" data-view="register">Register your business</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="cert-card">
+                        <div class="cnum mono">CERTIFICATE ${featured[0] ? featured[0].certNo : 'V-0001'}</div>
+                        <h4>${featured[0] ? esc(featured[0].name) : 'Your Business Here'}</h4>
+                        <span class="tag">${featured[0] ? esc(featured[0].category) : 'Handmade'}</span>
+                    </div>
+                    <div class="stamp-wrap">${sealSVG('hero', 168)}</div>
+                </div>
+            </section>
+
+            <section class="section" style="padding-top:0">
+                <div class="statbar">
+                    <div class="stat"><div class="n">${verified.length}</div><div class="l">Verified shops</div></div>
+                    <div class="stat"><div class="n">${BUSINESSES.filter(b => b.status === 'pending').length}</div><div class="l">Applications in review</div></div>
+                    <div class="stat"><div class="n">${new Set(BUSINESSES.map(b => b.category)).size}</div><div class="l">Craft categories</div></div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <h2>How a business gets verified</h2>
+                </div>
+                <div class="steps">
+                    <div class="step"><div class="num mono">01</div><h4>Submit business & social details</h4><p>Owner name, contact info, Instagram/Facebook/WhatsApp — the same details a customer would want to check.</p></div>
+                    <div class="step"><div class="num mono">02</div><h4>Admin checks it's real</h4><p>We look at the social pages, contact details and history before approving — not just a form submission.</p></div>
+                    <div class="step"><div class="num mono">03</div><h4>Verified seal & shop listing</h4><p>Approved businesses get a certificate number and appear in the directory, ready for customers to shop from.</p></div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <h2>Featured verified shops</h2>
+                    <button class="btn btn-outline btn-small" data-action="nav" data-view="browse">View all →</button>
+                </div>
+                <div class="grid">
+                    ${featured.length ? featured.map(b => businessCard(b)).join('') : `<div class="empty">No verified shops yet — check back soon.</div>`}
+                </div>
+            </section>
+            `;
+        }
+
+        function businessCard(b) {
+            return `
+            <div class="card">
+                <div class="card-top">
+                    <div>
+                        <h3>${esc(b.name)}</h3>
+                        <span class="cat-tag">${esc(b.category)}</span>
+                    </div>
+                    ${sealSVG('card-' + b.id, 36)}
+                </div>
+                <p class="desc">${esc(b.description).slice(0, 110)}${b.description.length > 110 ? '…' : ''}</p>
+                <div class="loc">${esc(b.city)} · certificate ${b.certNo} · verified ${timeAgo(b.verifiedAt)}</div>
+                <div class="card-foot">
+                    <div class="social-row">${socialLinks(b).join('')}</div>
+                    <button class="btn btn-primary btn-small" data-action="view-business" data-id="${b.id}">View shop</button>
+                </div>
+            </div>`;
+        }
+
+        function renderBrowse() {
+            const verified = BUSINESSES.filter(b => b.status === 'verified');
+            const filtered = verified.filter(b => {
+                const matchCat = filterCat === 'all' || b.category === filterCat;
+                const q = searchQ.trim().toLowerCase();
+                const matchQ = !q || b.name.toLowerCase().includes(q) || b.category.toLowerCase().includes(q) || b.city
+                    .toLowerCase().includes(q);
+                return matchCat && matchQ;
+            });
+            return `
+            <section class="section">
+                <div class="section-head"><h2>Verified shops</h2><span class="mono" style="font-size:12px;color:var(--ink-soft)">${filtered.length} of ${verified.length} shops</span></div>
+                <div class="browse-controls">
+                    <div class="search-box"><input type="text" id="search-input" placeholder="Search by shop, craft or city…" value="${esc(searchQ)}"></div>
+                    <div class="chips">
+                        <button class="chip ${filterCat === 'all' ? 'active' : ''}" data-action="filter-cat" data-cat="all">All</button>
+                        ${CATEGORIES.map(c => `<button class="chip ${filterCat === c ? 'active' : ''}" data-action="filter-cat" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}
+                    </div>
+                </div>
+                <div class="grid">
+                    ${filtered.length ? filtered.map(b => businessCard(b)).join('') : `<div class="empty">No verified shops match that search yet.</div>`}
+                </div>
+            </section>`;
+        }
+
+        function renderDetail() {
+            const b = BUSINESSES.find(x => x.id === detailId);
+            if (!b) return `<div class="empty">Shop not found. <button class="btn btn-outline btn-small" data-action="nav" data-view="browse">Back to shops</button></div>`;
+            const links = socialLinks(b);
+            return `
+            <section class="section">
+                <button class="back-link" data-action="nav" data-view="browse">← Back to shops</button>
+                <div class="detail-head">
+                    <div>
+                        <h1>${esc(b.name)}</h1>
+                        <div class="detail-meta">${esc(b.category)} · ${esc(b.city)} · certificate <span class="mono">${b.certNo}</span> · verified ${timeAgo(b.verifiedAt)}</div>
+                    </div>
+                    ${sealSVG('detail-' + b.id, 74)}
+                </div>
+                <div class="detail-grid">
+                    <div>
+                        <h3 style="font-size:16px;margin-bottom:10px;">About this business</h3>
+                        <p style="color:var(--ink-soft)">${esc(b.description)}</p>
+                        <h3 style="font-size:16px;margin:26px 0 4px;">Products</h3>
+                        <div class="product-grid">
+                            ${b.products.map(p => `<div class="product-card"><div class="pname">${esc(p.name)}</div><div class="pprice mono">${esc(p.price)}</div><div style="font-size:12.5px;color:var(--ink-soft);margin-top:4px;">${esc(p.desc)}</div></div>`).join('')}
+                        </div>
+                        <p style="margin-top:22px;"><button class="btn btn-outline btn-small" data-action="nav" data-view="report" data-prefill="${esc(b.name)}">Report this listing</button></p>
+                    </div>
+                    <div>
+                        <h3 style="font-size:16px;margin-bottom:10px;">Contact & verify yourself</h3>
+                        <ul class="contact-list">
+                            <li><span>Owner</span><span>${esc(b.owner)}</span></li>
+                            <li><span>Email</span><a href="mailto:${esc(b.email)}">${esc(b.email)}</a></li>
+                            <li><span>Phone</span><span>${esc(b.phone)}</span></li>
+                            ${links.map(l => `<li><span>Social</span>${l}</li>`).join('')}
+                            ${b.website ? `<li><span>Website</span><span>${esc(b.website)}</span></li>` : ''}
+                        </ul>
+                    </div>
+                </div>
+            </section>`;
+        }
+
+        function renderAuthenticity() {
+            const apiStatus = CONFIG.GEMINI_API_KEY && CONFIG.GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY_HERE' ?
+                '  Gemini AI Enabled' :
+                '  Gemini AI Disabled (Add API key in CONFIG)';
+
+            return `
+            <section class="section">
+                <div class="section-head">
+                    <h2> AI-Powered Store Authenticity Checker</h2>
+                    <span style="font-size:12px;color:var(--ink-soft);">${apiStatus}</span>
+                </div>
+                <div class="authenticity-checker">
+                    <p style="color:var(--ink-soft);font-size:15px;">
+                        Enter a business name to check its authenticity. Our AI verifies through:
+                        <br>
+                        <span style="font-size:13px;">
+                         Database Match ·  Social Media Presence ·  AI Analysis ·  Name Quality
+                        </span>
+                    </p>
+                    <div class="checker-input-group">
+                        <input type="text" id="checker-input" placeholder="Enter store name (e.g., Ember & Wick Candles)">
+                        <button class="btn btn-primary" id="check-btn"> Check Authenticity</button>
+                    </div>
+                    <div id="result-container"></div>
+                </div>
+                <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+                    <div style="background:var(--card);padding:16px;border:1px solid var(--line);">
+                        <strong>Example Stores:</strong>
+                        <div style="margin-top:8px;font-size:13px;color:var(--ink-soft);">
+    
+                            <div>  Woolwhirl Crochet Studio</div>
+                            <div>  The Clay Collective</div>
+                            <div>  test123shop</div>
+                        </div>
+                    </div>
+                    <div style="background:var(--card);padding:16px;border:1px solid var(--line);">
+                        <strong>How it works:</strong>
+                        <div style="margin-top:8px;font-size:13px;color:var(--ink-soft);">
+                            1. Database check<br>
+                            2. Social media scan<br>
+                            3. AI-powered analysis<br>
+                            4. Quality scoring
+                        </div>
+                    </div>
+                </div>
+            </section>`;
+        }
+
+        function renderRegister() {
+            return `
+            <section class="section" style="padding-top:34px">
+                <div class="section-head"><h2>Register your business</h2></div>
+                <div class="form-card">
+                    <p style="color:var(--ink-soft);font-size:13.5px;margin-top:-6px;margin-bottom:22px;">Tell us who you are and where customers can already find you. An admin reviews every application before it's listed.</p>
+                    <form id="register-form">
+                        <div class="field"><label>Business name</label><input type="text" name="name" required></div>
+                        <div class="field-row">
+                            <div class="field"><label>Category</label>
+                                <select name="category" required>${CATEGORIES.map(c => `<option>${c}</option>`).join('')}</select>
+                            </div>
+                            <div class="field"><label>City</label><input type="text" name="city" required></div>
+                        </div>
+                        <div class="field"><label>Owner's full name</label><input type="text" name="owner" required></div>
+                        <div class="field"><label>Short description</label><textarea name="description" rows="3" required placeholder="What you make, materials used, how orders work…"></textarea></div>
+
+                        <fieldset>
+                            <legend>Contact & socials</legend>
+                            <div class="field-row">
+                                <div class="field"><label>Email</label><input type="email" name="email" required></div>
+                                <div class="field"><label>Phone</label><input type="tel" name="phone" required></div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field"><label>WhatsApp number</label><input type="tel" name="whatsapp"></div>
+                                <div class="field"><label>Instagram handle</label><input type="text" name="instagram" placeholder="without @"></div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field"><label>Facebook page</label><input type="text" name="facebook"></div>
+                                <div class="field"><label>Website (optional)</label><input type="text" name="website"></div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Products (add up to 5)</legend>
+                            <div id="product-rows">${renderProductRows()}</div>
+                            <button type="button" class="btn btn-outline btn-small" id="add-product" style="margin-top:6px;">+ Add another product</button>
+                        </fieldset>
+
+                        <button type="submit" class="btn btn-seal" style="width:100%;justify-content:center;margin-top:10px;">Submit for verification</button>
+                    </form>
+                </div>
+            </section>`;
+        }
+
+        function renderProductRows() {
+            return registerProducts.map((p, i) => `
+                <div class="product-row" data-idx="${i}">
+                    <input type="text" placeholder="Product name" class="p-name" value="${esc(p.name)}">
+                    <input type="text" placeholder="Price" class="p-price" value="${esc(p.price)}">
+                    <input type="text" placeholder="Short description" class="p-desc" value="${esc(p.desc)}">
+                    ${registerProducts.length > 1 ? `<button type="button" class="remove-x" data-action="remove-product" data-idx="${i}">×</button>` : `<span></span>`}
+                </div>`).join('');
+        }
+
+        function renderRegistered() {
+            const app = BUSINESSES[BUSINESSES.length - 1];
+            return `
+            <section class="section" style="text-align:center;padding-top:70px;">
+                <div style="display:flex;justify-content:center;margin-bottom:18px;">${sealSVG('pending', 90, true)}</div>
+                <h2>Application ${app.certNo ? app.certNo : ''} submitted</h2>
+                <p style="color:var(--ink-soft);max-width:44ch;margin:12px auto 24px;">"${esc(app.name)}" is now pending admin review. Once verified, it'll appear in the shop directory with a verified seal.</p>
+                <button class="btn btn-primary" data-action="nav" data-view="browse">Browse verified shops meanwhile</button>
+            </section>`;
+        }
+
+        function renderAdmin() {
+            if (!adminAuthed) {
+                return `
+                <section class="admin-gate">
+                    <h2>Admin sign in</h2>
+                    <p style="color:var(--ink-soft);font-size:13.5px;margin:10px 0 20px;">Demo passcode: <span class="mono">admin123</span></p>
+                    <form id="admin-login">
+                        <div class="field"><input type="text" name="pass" placeholder="Passcode" required></div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Sign in</button>
+                    </form>
+                </section>`;
+            }
+            const pending = BUSINESSES.filter(b => b.status === 'pending');
+            const verified = BUSINESSES.filter(b => b.status === 'verified');
+            const rejected = BUSINESSES.filter(b => b.status === 'rejected');
+            const list = adminTab === 'pending' ? pending : adminTab === 'verified' ? verified : rejected;
+            return `
+            <section class="section">
+                <div class="section-head"><h2>Admin — verification queue</h2>
+                    <button class="btn btn-outline btn-small" data-action="admin-logout">Sign out</button>
+                </div>
+                <div class="admin-tabs">
+                    <button class="${adminTab === 'pending' ? 'active' : ''}" data-action="admin-tab" data-tab="pending">Pending (${pending.length})</button>
+                    <button class="${adminTab === 'verified' ? 'active' : ''}" data-action="admin-tab" data-tab="verified">Verified (${verified.length})</button>
+                    <button class="${adminTab === 'rejected' ? 'active' : ''}" data-action="admin-tab" data-tab="rejected">Rejected (${rejected.length})</button>
+                </div>
+                ${list.length ? list.map(b => adminAppCard(b)).join('') : `<div class="empty">Nothing here.</div>`}
+            </section>`;
+        }
+
+        function adminAppCard(b) {
+            const links = socialLinks(b);
+            return `
+            <div class="app-card" id="app-${b.id}">
+                <div class="app-top">
+                    <div>
+                        <h3>${esc(b.name)} <span class="mono" style="font-size:11px;color:var(--ink-soft)">${b.certNo || ''}</span></h3>
+                        <span class="cat-tag">${esc(b.category)}</span>
+                        ${b.status === 'pending' ? `<span class="pending-badge" style="margin-left:6px;">pending</span>` : ''}
+                        ${b.status === 'rejected' ? `<span class="rejected-badge" style="margin-left:6px;">rejected</span>` : ''}
+                    </div>
+                    <div class="loc">Applied ${timeAgo(b.submittedAt)}</div>
+                </div>
+                <div class="app-fields">
+                    <div><span>Owner</span>${esc(b.owner)}</div>
+                    <div><span>City</span>${esc(b.city)}</div>
+                    <div><span>Email</span>${esc(b.email)}</div>
+                    <div><span>Phone</span>${esc(b.phone)}</div>
+                    <div><span>Socials to check</span>${links.length ? links.join(' · ') : '<em>none provided</em>'}</div>
+                    <div><span>Description</span>${esc(b.description)}</div>
+                </div>
+                ${b.status === 'pending' ? `
+                <div class="app-actions">
+                    <button class="btn btn-seal btn-small" data-action="approve" data-id="${b.id}">Approve & stamp verified</button>
+                    <button class="btn btn-danger btn-small" data-action="reject" data-id="${b.id}">Reject</button>
+                </div>` : ''}
+            </div>`;
+        }
+
+        function renderReport() {
+            return `
+            <section class="section" style="padding-top:34px">
+                <div class="section-head"><h2>Report a suspicious listing</h2></div>
+                <div class="form-card">
+                    <p style="color:var(--ink-soft);font-size:13.5px;margin-top:-6px;margin-bottom:20px;">Seen a shop that doesn't match its claims, or someone impersonating a verified seller? Let the admin team know.</p>
+                    <form id="report-form">
+                        <div class="field"><label>Business or listing name</label><input type="text" name="business" id="report-business" required></div>
+                        <div class="field"><label>What happened?</label><textarea name="detail" rows="4" required placeholder="Describe the issue — non-delivery, fake photos, impersonation…"></textarea></div>
+                        <div class="field"><label>Your contact (optional)</label><input type="text" name="contact" placeholder="Email or phone, if you'd like a follow-up"></div>
+                        <button type="submit" class="btn btn-seal" style="width:100%;justify-content:center;">Submit report</button>
+                    </form>
+                </div>
+            </section>`;
+        }
+
+        // ============================================
+        // AFTER RENDER: BIND EVENTS
+        // ============================================
+        function afterRender() {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    searchQ = e.target.value;
+                    softRenderBrowse();
+                });
+            }
+
+            const regForm = document.getElementById('register-form');
+            if (regForm) {
+                regForm.addEventListener('submit', onRegisterSubmit);
+                const addBtn = document.getElementById('add-product');
+                if (addBtn) {
+                    addBtn.addEventListener('click', function() {
+                        if (registerProducts.length < 5) {
+                            registerProducts.push({ name: '', price: '', desc: '' });
+                            document.getElementById('product-rows').innerHTML = renderProductRows();
+                            bindProductRemovers();
+                        }
+                    });
+                }
+                bindProductRemovers();
+            }
+
+            const loginForm = document.getElementById('admin-login');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const pass = e.target.pass.value;
+                    if (pass === 'admin123') {
+                        adminAuthed = true;
+                        showToast('Signed in as admin');
+                        render();
+                    } else {
+                        showToast('Incorrect passcode');
+                    }
+                });
+            }
+
+            const reportForm = document.getElementById('report-form');
+            if (reportForm) {
+                reportForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const f = new FormData(e.target);
+                    REPORTS.push({
+                        business: f.get('business'),
+                        detail: f.get('detail'),
+                        contact: f.get('contact'),
+                        at: Date.now()
+                    });
+                    saveReports(REPORTS);
+                    showToast('Report received — thank you');
+                    currentView = 'home';
+                    render();
+                });
+            }
+
+            // Authenticity checker
+            const checkBtn = document.getElementById('check-btn');
+            if (checkBtn) {
+                checkBtn.addEventListener('click', onCheckAuthenticity);
+                const input = document.getElementById('checker-input');
+                if (input) {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') onCheckAuthenticity();
+                    });
+                }
+            }
+        }
+
+        function bindProductRemovers() {
+            document.querySelectorAll('[data-action="remove-product"]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.idx, 10);
+                    registerProducts.splice(idx, 1);
+                    document.getElementById('product-rows').innerHTML = renderProductRows();
+                    bindProductRemovers();
+                });
+            });
+        }
+
+        function softRenderBrowse() {
+            document.getElementById('view-root').innerHTML = renderBrowse();
+            afterRender();
+        }
+
+        // ============================================
+        // AUTHENTICITY CHECK HANDLER
+        // ============================================
+        async function onCheckAuthenticity() {
+            const input = document.getElementById('checker-input');
+            const container = document.getElementById('result-container');
+            const storeName = input.value.trim();
+
+            if (!storeName) {
+                showToast('Please enter a store name');
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="result-card show">
+                    <div class="result-header">
+                        <span class="loading-spinner"></span>
+                        Analyzing "${esc(storeName)}"...
+                    </div>
+                    <div style="margin-top:12px;color:var(--ink-soft);font-size:13px;">
+                        Checking database...<br>
+                        Scanning social media...<br>
+                        Running AI analysis...<br>
+                         Calculating score...
+                    </div>
+                </div>
+            `;
+
+            try {
+                const results = await checkStoreAuthenticity(storeName);
+                displayResults(results, container);
+                showToast('  Analysis complete! Score: ' + results.overallScore + '%');
+            } catch (error) {
+                console.error('Check failed:', error);
+                container.innerHTML = `
+                    <div class="result-card show suspicious">
+                        <div class="result-header">Error</div>
+                        <p>Could not complete the check. Please try again.</p>
+                        <p style="font-size:13px;color:var(--ink-soft);margin-top:8px;">Error: ${esc(error.message)}</p>
+                    </div>
+                `;
+                showToast('Check failed. Please try again.');
+            }
+        }
+
+        function displayResults(results, container) {
+            const statusMap = {
+                'verified': { label: '  Verified Store', class: 'verified', icon: '🛡️' },
+                'partial': { label: '  Partial Match', class: 'partial', icon: '🔍' },
+                'suspicious': { label: '  Suspicious', class: 'suspicious', icon: '🚫' }
+            };
+
+            const statusInfo = statusMap[results.status] || statusMap['suspicious'];
+
+            let html = `
+                <div class="result-card show ${statusInfo.class}">
+                    <div class="result-header">
+                        ${statusInfo.icon} ${statusInfo.label}
+                        <span style="font-size:14px;font-weight:400;margin-left:auto;">
+                            Score: <strong style="font-size:20px;">${results.overallScore}%</strong>
+                        </span>
+                    </div>
+                    <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:16px;padding:12px;background:rgba(255,255,255,0.5);border-radius:4px;">
+                        <div><strong>Store:</strong> ${esc(results.storeName)}</div>
+                        ${results.foundStore ? `<div><strong>Status:</strong> ${results.foundStore.status}</div>` : ''}
+                        ${results.foundStore ? `<div><strong>Certificate:</strong> ${results.foundStore.certNo || 'Pending'}</div>` : ''}
+                    </div>
+                    
+                    <div class="result-details">
+            `;
+
+            results.checks.forEach(function(check) {
+                const statusClass = check.status === 'passed' ? 'pass' :
+                    check.status === 'warning' ? 'warn' : 'fail';
+                const scoreDisplay = check.score !== undefined ? ' (' + check.score + '%)' : '';
+
+                html += `
+                        <div class="check-item ${statusClass}">
+                            <div class="label">${esc(check.name)}</div>
+                            <div class="value ${statusClass}">${esc(check.detail)}${scoreDisplay}</div>
+                        </div>
+                    `;
+            });
+
+            html += `
+                    </div>
+                    
+                    ${results.aiResults ? `
+                        <div style="margin-top:16px;padding:12px;background:rgba(255,255,255,0.5);border-radius:4px;">
+                            <strong> AI Analysis:</strong>
+                            <div style="margin-top:6px;font-size:13px;color:var(--ink-soft);">
+                                <div> ${esc(results.aiResults.reasoning || 'Analysis complete')}</div>
+                                ${results.aiResults.greenFlags && results.aiResults.greenFlags.length > 0 ? 
+                                    `<div style="margin-top:4px;">  Green Flags: ${results.aiResults.greenFlags.join(', ')}</div>` : ''}
+                                ${results.aiResults.redFlags && results.aiResults.redFlags.length > 0 ? 
+                                    `<div style="margin-top:4px;">  Red Flags: ${results.aiResults.redFlags.join(', ')}</div>` : ''}
+                                ${results.aiResults.confidence ? 
+                                    `<div style="margin-top:4px;"> Confidence: ${results.aiResults.confidence}%</div>` : ''}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${results.socialResults ? `
+                        <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;">
+                            <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:4px;text-align:center;">
+                                <div style="font-size:11px;color:var(--ink-soft);">Instagram</div>
+                                <div>${results.socialResults.instagram ? ' ' : ''}</div>
+                            </div>
+                            <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:4px;text-align:center;">
+                                <div style="font-size:11px;color:var(--ink-soft);">Facebook</div>
+                                <div>${results.socialResults.facebook ? ' ' : ' '}</div>
+                            </div>
+                            <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:4px;text-align:center;">
+                                <div style="font-size:11px;color:var(--ink-soft);">Website</div>
+                                <div>${results.socialResults.website ? ' ' : ' '}</div>
+                            </div>
+                            <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:4px;text-align:center;">
+                                <div style="font-size:11px;color:var(--ink-soft);">Google</div>
+                                <div>${results.socialResults.google ? ' ' : ' '}</div>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${results.recommendations && results.recommendations.length > 0 ? `
+                        <div style="margin-top:16px;padding:12px;background:#FFF8E7;border-left:3px solid var(--honey);border-radius:4px;">
+                            <strong>💡 Recommendations:</strong>
+                            <ul style="margin-top:6px;padding-left:20px;font-size:13px;color:var(--ink-soft);">
+                                ${results.recommendations.map(function(r) { return '<li>' + esc(r.message) + '</li>'; }).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    
+                    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+                        ${results.foundStore ? `
+                            <button class="btn btn-primary btn-small" data-action="view-business" data-id="${results.foundStore.id}">View Shop Details</button>
+                        ` : `
+                            <button class="btn btn-outline btn-small" data-action="nav" data-view="register">Register Your Business</button>
+                        `}
+                        <button class="btn btn-outline btn-small" onclick="document.getElementById('checker-input').value='';document.getElementById('result-container').innerHTML='';">Clear Results</button>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+
+            // Re-bind events
+            container.querySelectorAll('[data-action="view-business"]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    detailId = this.dataset.id;
+                    currentView = 'detail';
+                    render();
+                });
+            });
+
+            container.querySelectorAll('[data-action="nav"]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    currentView = this.dataset.view;
+                    render();
+                });
+            });
+        }
+
+        // ============================================
+        // REGISTER SUBMIT
+        // ============================================
+        async function onRegisterSubmit(e) {
+            e.preventDefault();
+            syncProductsFromDOM();
+            const f = new FormData(e.target);
+            const products = registerProducts.filter(function(p) { return p.name; });
+            if (products.length === 0) { showToast('Add at least one product'); return; }
+            const entry = {
+                id: uid('B'),
+                certNo: null,
+                status: 'pending',
+                name: f.get('name').trim(),
+                category: f.get('category'),
+                city: f.get('city').trim(),
+                owner: f.get('owner').trim(),
+                email: f.get('email').trim(),
+                phone: f.get('phone').trim(),
+                whatsapp: f.get('whatsapp').trim(),
+                instagram: f.get('instagram').trim(),
+                facebook: f.get('facebook').trim(),
+                website: f.get('website').trim(),
+                description: f.get('description').trim(),
+                products: products,
+                submittedAt: Date.now()
+            };
+            BUSINESSES.push(entry);
+            saveBusinesses(BUSINESSES);
+            registerProducts = [{ name: '', price: '', desc: '' }];
+            currentView = 'registered';
+            render();
+        }
+
+        function syncProductsFromDOM() {
+            document.querySelectorAll('.product-row').forEach(function(row, i) {
+                registerProducts[i] = {
+                    name: row.querySelector('.p-name').value.trim(),
+                    price: row.querySelector('.p-price').value.trim(),
+                    desc: row.querySelector('.p-desc').value.trim()
+                };
+            });
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Nav buttons
+            document.querySelectorAll('#main-nav button').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    currentView = this.dataset.view;
+                    render();
+                });
+            });
+
+            // Brand click
+            document.getElementById('brand-home').addEventListener('click', function() {
+                currentView = 'home';
+                render();
+            });
+
+            // Report link
+            document.getElementById('report-link').addEventListener('click', function() {
+                currentView = 'report';
+                render();
+            });
+
+            // Global click delegation for dynamic elements
+            document.addEventListener('click', function(e) {
+                const el = e.target.closest('[data-action]');
+                if (el) {
+                    const action = el.dataset.action;
+
+                    if (action === 'nav') {
+                        currentView = el.dataset.view;
+                        render();
+                        if (currentView === 'report' && el.dataset.prefill) {
+                            const inp = document.getElementById('report-business');
+                            if (inp) inp.value = el.dataset.prefill;
+                        }
+                        return;
+                    }
+                    if (action === 'view-business') {
+                        detailId = el.dataset.id;
+                        currentView = 'detail';
+                        render();
+                        return;
+                    }
+                    if (action === 'filter-cat') {
+                        filterCat = el.dataset.cat;
+                        softRenderBrowse();
+                        return;
+                    }
+                    if (action === 'admin-tab') {
+                        adminTab = el.dataset.tab;
+                        render();
+                        return;
+                    }
+                    if (action === 'admin-logout') {
+                        adminAuthed = false;
+                        render();
+                        return;
+                    }
+
+                    if (action === 'approve') {
+                        const b = BUSINESSES.find(function(x) { return x.id === el.dataset.id; });
+                        if (b) {
+                            const n = BUSINESSES.filter(function(x) { return x.certNo; }).length + 1;
+                            b.status = 'verified';
+                            b.certNo = certNumber(n);
+                            b.verifiedAt = Date.now();
+                            saveBusinesses(BUSINESSES);
+                            showToast(b.name + ' verified — certificate ' + b.certNo + ' issued');
+                            render();
+                        }
+                        return;
+                    }
+                    if (action === 'reject') {
+                        const b = BUSINESSES.find(function(x) { return x.id === el.dataset.id; });
+                        if (b) {
+                            b.status = 'rejected';
+                            b.rejectedAt = Date.now();
+                            saveBusinesses(BUSINESSES);
+                            showToast(b.name + ' rejected');
+                            render();
+                        }
+                        return;
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // BOOT
+        // ============================================
+        function boot() {
+            const stored = loadBusinesses();
+            if (stored && stored.length) {
+                BUSINESSES = stored;
+            } else {
+                BUSINESSES = seedData();
+                saveBusinesses(BUSINESSES);
+            }
+            REPORTS = loadReports();
+
+            // Set logo
+            document.getElementById('logo-seal').innerHTML = sealSVG('logo', 30);
+
+            render();
+        }
+
+        boot();
+    </script>
+</body>
+</html>
