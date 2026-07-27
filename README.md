@@ -1,4 +1,4 @@
-# Seally — Verified Handmade Shops
+# Seally: Verified Small Bussiness Website
 
 A single-file, front-end-only web app that acts as a directory of "verified" handmade/small businesses. It's built as one self-contained `index.html` with inline CSS and vanilla JavaScript (no build step, no backend, no framework).
 
@@ -25,10 +25,10 @@ A single-file, front-end-only web app that acts as a directory of "verified" han
 
 ## Tool Used
 - Idea from myself + chagpt
-- claude for basic front end
-- google gemini api key
-- google stich for idea enhncing
-- deepseek for updation and chnages
+- Claude for basic front end
+- Google gemini api key
+- Google stich for idea enhncing
+- Deepseek for updation and changes
 
 ## Running it
 
