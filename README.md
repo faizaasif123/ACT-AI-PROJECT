@@ -29,12 +29,16 @@ A "name quality" heuristic (casing, length, keywords like "studio"/"collective")
 3. **No real backend/persistence.** Everything lives in `localStorage` on one device/browser — it's not shared between users, isn't an actual database, and would need a real backend (auth, storage, and genuine verification checks) before this could function as an actual trust-and-safety product.
 4. **Admin auth is a hardcoded client-side passcode** (`admin123`) checked in JavaScript — trivial to bypass by reading source, so it's demo-only and not real access control.
 
-## Suggested next steps if you want to develop this further
+## Tools/Techniques use in building this
+ Idea from myself + chatgpt combining
+ Frontend basic from claude
+ <ore enhncement and idea through google stich prototype initialy
+ Use gemini api key
+ Deep seek for making it perfect and all working correctly
+ Mannually tested each feature
+ GitHub 
+ Vercel Deployment
 
-- Move the Gemini (or any AI) call server-side, and never ship API keys in front-end code.
-- Replace the simulated social-media check with genuine verification (e.g., a human review step, or real API-based lookups with proper rate limiting and consent).
-- Add a real backend + database and real authentication for the admin role.
-- Be explicit in the UI about what the authenticity score does and doesn't check, so users don't over-trust it.
 
 ## Running it
 
