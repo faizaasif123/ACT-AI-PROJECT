@@ -30,14 +30,14 @@ A "name quality" heuristic (casing, length, keywords like "studio"/"collective")
 4. **Admin auth is a hardcoded client-side passcode** (`admin123`) checked in JavaScript — trivial to bypass by reading source, so it's demo-only and not real access control.
 
 ## Tools/Techniques use in building this
- Idea from myself + chatgpt combining
- Frontend basic from claude
- <ore enhncement and idea through google stich prototype initialy
- Use gemini api key
- Deep seek for making it perfect and all working correctly
- Mannually tested each feature
- GitHub 
- Vercel Deployment
+- Idea from myself + chatgpt combining
+- Frontend basic from claude
+- More enhncement and idea through google stich prototype initialy
+- Use gemini api key
+- Deep seek for making it perfect and all working correctly
+- Mannually tested each feature
+- GitHub
+- Vercel Deployment
 
 
 ## Running it
